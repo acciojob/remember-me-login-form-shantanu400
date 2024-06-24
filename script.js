@@ -1,24 +1,31 @@
-let save=document.getElementById('submit').addEventListener('click',function(){
-	let user=document.getElementById('Username').value;
-	let pass=document.getElementById('password').value;
-	if((localStorage.getItem("Username")==user) && (localStorage.getItem("password")==pass)){
-		document.getElementById('submit').insertAdjacentHTML('afterend', `<button type="submit" id="existing">Login as existing user</button>`);
-		document.getElementById('existing').addEventListener('click',function(){
-			alert('Logged in as'+ user);
-		}
-		)
-	}
-	else{
-		if(document.getElementById('checkbox').checked){
-			localStorage.setItem("Username",user);
-			localStorage.setItem("password",pass);
-		alert('Logged in as'+ user);
-			}
-			else{
-				alert('Logged in as'+ user);
-				localStorage.removeItem("Username");
-				localStorage.removeItem("password");	
-			}	
-		}
+function clicked(){
+    event.preventDefault();
+    let checkboxvalue = document.getElementById("checkbox").checked;
+    if(checkboxvalue == true) {
+        let name = document.getElementById("username").value;
+        localStorage.setItem("name", name);
+        let password = document.getElementById("password").value;
+        localStorage.setItem("password", password);
+    } else {
+        localStorage.removeItem("name");
+        localStorage.removeItem("password");
+    }
+    Alert();
 }
-	
+ 
+function Alert() {
+    let name = document.getElementById("username").value;
+    alert("Logged in as "+name);
+}
+ 
+document.addEventListener("DOMContentLoaded", (event) => {
+    let name = localStorage.getItem("name");
+    let password = localStorage.getItem("password");
+    if(name != null && password != null) {
+        document.getElementById("existing").style.display = "block";
+        document.getElementById("username").value = name;
+        document.getElementById("password").value = password;
+    } else {
+        document.getElementById("existing").style.display = "none";
+    }
+});
